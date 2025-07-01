@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Payments Face — XXBank</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    .slider-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding: 0;
+      margin: 0;
+    }
+
+    .slide {
+      flex: 0 0 100vw;
+      height: 100vh;
+      padding: 0 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      scroll-snap-align: start;
+      background: white;
+    }
+
+    .slide:nth-child(odd) {
+      background: #fdfdfd;
+    }
+
+    .slide img {
+      max-width: 90vw;
+      max-height: 50vh;
+      object-fit: contain;
+      margin-bottom: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 4rem;
+      margin-bottom: 25px;
+      color: #dc4405;
+    }
+
+    p {
+      font-size: 1.3rem;
+      max-width: 700px;
+      margin-bottom: 40px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .button {
+      background-color: #dc4405;
+      color: white;
+      border: none;
+      padding: 16px 36px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #a83201;
+    }
+
+    .nav {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      background: #ccc;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .dot.active {
+      background: #dc4405;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="slider-container" id="slider">
+    <div class="slide">
+      <img src="https://i.imgur.com/66VmzdJ.jpeg" alt="GTLipa Payment Method" />
+      <h1>GTLipa</h1>
+      <button class="button" onclick="window.location.href='https://gt-lipa-demo.vercel.app/'">See It In Action</button>
+    </div>
+    <div class="slide">
+      <img src="https://i.imgur.com/7FgBrGf.jpeg" alt="GAPS Payment Method" />
+      <h1>GAPS</h1>
+      <button class="button" onclick="window.location.href='https://pos-demo-xo58-nate6af33-gtbank2023s-projects.vercel.app/'">See It In Action</button>
+    </div>
+    <div class="slide">
+      <img src="https://i.imgur.com/O3NGx5G.jpeg" alt="POS Machine" />
+      <h1>POS</h1>
+      <button class="button" onclick="window.location.href='https://pos-demo-beryl.vercel.app/'">See It In Action</button>
+    </div>
+    <div class="slide">
+      <img src="https://i.imgur.com/4DkpRdv.jpeg" alt="GTWorld App" />
+      <h1>GTWorld</h1>
+      <button class="button" onclick="window.location.href='https://gt-world-demo.vercel.app/'">See It In Action</button>
+    </div>
+    <div class="slide">
+      <img src="https://i.imgur.com/5Rrxi8K.jpeg" alt="Internet Banking" />
+      <h1>Internet Banking</h1>
+      <button class="button" onclick="window.location.href='#'">See It In Action</button>
+    </div>
+  </div>
+
+  <div class="nav" id="navDots"></div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const nav = document.getElementById('navDots');
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => {
+        document.getElementById('slider').scrollLeft = i * window.innerWidth;
+      });
+      nav.appendChild(dot);
+    });
+
+    const slider = document.getElementById('slider');
+    slider.addEventListener('scroll', () => {
+      const scrollLeft = slider.scrollLeft;
+      const index = Math.round(scrollLeft / window.innerWidth);
+      document.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i === index);
+      });
+    });
+
+    // Auto-slide every 5 seconds
+    let currentIndex = 0;
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      slider.scrollLeft = currentIndex * window.innerWidth;
+    }, 5000);
+  </script>
+
+</body>
+</html>
